@@ -1,29 +1,73 @@
-import React from 'react'
-
-const people = [
-  {
-    name: 'John Doe',
-    title: 'Front-end Developer',
-    department: 'Engineering',
-    email: 'john@devui.com',
-    role: 'Developer',
-    image:
-      'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
-  },
-  {
-    name: 'Jane Doe',
-    title: 'Back-end Developer',
-    department: 'Engineering',
-    email: 'jane@devui.com',
-    role: 'CTO',
-    image:
-      'https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80',
-  },
-]
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase-config";
+import { collection, getDocs } from "firebase/firestore";
+import Modal from "./Modal";
 
 export function TableOne() {
+  const [data, setData] = useState([]);
+  const [reg, setReg] = useState(false);
+
+  const singleColRef = collection(db, "singleReg");
+  const multiColRef = collection(db, "multiReg");
+
+  const getData = async () => {
+    try {
+      let info = [];
+      if (!reg) {
+        const userData = await getDocs(singleColRef);
+        userData.docs.forEach((doc) => {
+          info.push({ ...doc.data(), id: doc.id });
+        });
+        setData(info);
+      } else {
+        const userData = await getDocs(multiColRef);
+        userData.docs.forEach((doc) => {
+          info.push({ ...doc.data(), id: doc.id });
+        });
+        setData(info);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [reg]);
+
   return (
     <>
+      <div className="flex justify-evenly items-center m-[40px]">
+        <button
+          className={
+            reg === !false
+              ? "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          }
+          onClick={() => setReg(false)}
+        >
+          Single
+        </button>
+        <button
+          className={
+            reg === false
+              ? "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          }
+          onClick={() => setReg(true)}
+        >
+          Multiple
+        </button>
+      </div>
+      {!reg ? (
+        <h1 className="flex text-purple-700 justify-center text-4xl">
+          SOLO EVENTS
+        </h1>
+      ) : (
+        <h1 className="flex text-purple-700 justify-center text-4xl">
+          GROUP EVENTS
+        </h1>
+      )}
       <section className="mx-auto w-auto max-w-7xl px-4 py-4">
         <div className="mt-6 flex flex-col">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -36,13 +80,13 @@ export function TableOne() {
                         scope="col"
                         className="px-4 py-3.5 text-left text-sm font-normal text-gray-700"
                       >
-                        <span>Employee</span>
+                        <span>Name</span>
                       </th>
                       <th
                         scope="col"
                         className="px-12 py-3.5 text-left text-sm font-normal text-gray-700"
                       >
-                        Title
+                        Event Name
                       </th>
 
                       <th
@@ -56,47 +100,63 @@ export function TableOne() {
                         scope="col"
                         className="px-4 py-3.5 text-left text-sm font-normal text-gray-700"
                       >
-                        Role
+                        Payment Id
                       </th>
                       <th scope="col" className="relative px-4 py-3.5">
-                        <span className="sr-only">Edit</span>
+                        <span className="sr-only">View</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {people.map((person) => (
-                      <tr key={person.name}>
+                    {data.map((e) => (
+                      <tr key={e.id}>
                         <td className="whitespace-nowrap px-4 py-4">
                           <div className="flex items-center">
-                            <div className="h-10 w-10 flex-shrink-0">
-                              <img
-                                className="h-10 w-10 rounded-full object-cover"
-                                src={person.image}
-                                alt=""
-                              />
-                            </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                              <div className="text-sm text-gray-700">{person.email}</div>
+                              <div className="text-sm font-medium text-gray-900">
+                                {Array.isArray(e.Name) ? e.Name[0] : e.Name}
+                              </div>
+                              <div className="text-sm text-gray-700">
+                                {e.Email}
+                              </div>
                             </div>
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-12 py-4">
-                          <div className="text-sm text-gray-900 ">{person.title}</div>
-                          <div className="text-sm text-gray-700">{person.department}</div>
+                          <div className="text-sm text-gray-900 ">
+                            {e.Event}
+                          </div>
                         </td>
                         <td className="whitespace-nowrap px-4 py-4">
-                          <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            Active
-                          </span>
+                          {e.payment_verified ? (
+                            <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                              Verified
+                            </span>
+                          ) : (
+                            <span className="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800">
+                              Not Verified
+                            </span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-700">
-                          {person.role}
+                          {e.Payment_id}
                         </td>
                         <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium">
-                          <a href="#" className="text-gray-700">
-                            Edit
-                          </a>
+                          {!e.payment_verified ? (
+                            <a className="text-gray-700 cursor-pointer">
+                              <Modal
+                                payment_id={e.Payment_id}
+                                id={e.id}
+                                email={e.email}
+                                paymentUrl={e.paymentUrl}
+                                userData={data}
+                                setUserData={setData}
+                                reg={reg}
+                              />
+                            </a>
+                          ) : (
+                            ""
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -108,5 +168,5 @@ export function TableOne() {
         </div>
       </section>
     </>
-  )
+  );
 }
