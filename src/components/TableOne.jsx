@@ -18,12 +18,18 @@ export function TableOne() {
         userData.docs.forEach((doc) => {
           info.push({ ...doc.data(), id: doc.id });
         });
+        info.sort((a,b)=>{
+          return a.payment_verified - b.payment_verified;
+        })
         setData(info);
       } else {
         const userData = await getDocs(multiColRef);
         userData.docs.forEach((doc) => {
           info.push({ ...doc.data(), id: doc.id });
         });
+        info.sort((a,b)=>{
+          return a.payment_verified - b.payment_verified;
+        })
         setData(info);
       }
     } catch (error) {
@@ -68,8 +74,8 @@ export function TableOne() {
           GROUP EVENTS
         </h1>
       )}
-      <section className="mx-auto w-auto max-w-7xl px-4 py-4">
-        <div className="mt-6 flex flex-col">
+      <section className="mx-auto w-auto max-w-7xl px-4 py-4 ">
+        <div className="mt-6 flex flex-col h-[680px]">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200 md:rounded-lg">
@@ -118,6 +124,9 @@ export function TableOne() {
                               </div>
                               <div className="text-sm text-gray-700">
                                 {e.Email}
+                              </div>
+                              <div className="text-sm text-gray-700">
+                                {e.Whatsapp_Number}
                               </div>
                             </div>
                           </div>

@@ -1,4 +1,3 @@
-import { collection, doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { updateSingleRegPayment } from "../utils/payment";
 
@@ -24,8 +23,10 @@ export default function Verifymodal({
     };
     updatedInfo.payment_verified = true;
     data[ind] = updatedInfo;
+    data.sort((a,b)=>{
+      return a.payment_verified - b.payment_verified;
+    })
     setUserData(data);
-    console.log(data);
   };
   return (
     <>
