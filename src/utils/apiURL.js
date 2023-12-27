@@ -1,1 +1,1 @@
-export const APIURL = "http://54.81.101.40:5000/api/v1"
+export const APIURL = "https://mesmerizer-backend.onrender.com/api/v1"
