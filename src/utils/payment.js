@@ -13,7 +13,7 @@ export const updateSingleRegPayment = async (id, email, reg, user) => {
       await axios.post(`${APIURL}/sendMail`, {
         user: [user],
         emailID: email,
-        id
+        id: `https://mesmerizer-2k24.web.app/events/singleReg/${id}`
       })
       return true;
     } else {
@@ -21,7 +21,7 @@ export const updateSingleRegPayment = async (id, email, reg, user) => {
       await axios.post(`${APIURL}/sendMail`, {
         user: [...user],
         emailID: email,
-        id
+        id: `https://mesmerizer-2k24.web.app/events/multiReg/${id}`
       })
       return true;
     }

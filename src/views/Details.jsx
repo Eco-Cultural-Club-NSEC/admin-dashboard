@@ -5,7 +5,7 @@ import { APIURL } from '../utils/apiURL'
 import { UserFound } from '../components/UserFound'
 
 const Details = () => {
-  const { id } = useParams()
+  const { eventtype, id } = useParams()
   const [present, setPresent] = useState(false)
   useEffect(() => {
 
@@ -15,14 +15,9 @@ const Details = () => {
           `${APIURL}/checkValidity`,
           {
             id,
-            collectionName: 'singleReg'
+            collectionName: eventtype
           },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-              // Add other headers if needed
-            }
-          })
+        )
         setPresent(true)
         console.log("Yay")
       }

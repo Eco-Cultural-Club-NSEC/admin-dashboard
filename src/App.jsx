@@ -35,7 +35,7 @@ function App() {
     <Routes>
       <Route path='/login' element={<Login/>}/>
       <Route path='/' element={<SidebarOne/>}/>
-      <Route path='/events/:id' element={<Details/>}/>
+      <Route path='/events/:eventtype/:id' element={<Details/>}/>
       <Route path='/denied' element={<Notadmin/>}/>
       <Route path='*' element={<Pagenotfound/>}/>
     </Routes>
