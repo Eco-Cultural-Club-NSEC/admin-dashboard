@@ -10,29 +10,19 @@ export const updateSingleRegPayment = async (id, email, reg, user) => {
   try {
     if (!reg) {
       await setDoc(doc(db, "singleReg", id), update, { merge: true });
-      try {
-        await axios.post(`${APIURL}/sendMail`, {
-          user: [...user],
-          emailID: email,
-          id
-        })
-      }
-      catch (err) {
-        console.log("Error")
-      }
+      await axios.post(`${APIURL}/sendMail`, {
+        user: [user],
+        emailID: email,
+        id
+      })
       return true;
     } else {
       await setDoc(doc(db, "multiReg", id), update, { merge: true });
-      try {
-        await axios.post(`${APIURL}/sendMail`, {
-          user: [...user],
-          emailID: email,
-          id
-        })
-      }
-      catch (err) {
-        console.log("Error")
-      }
+      await axios.post(`${APIURL}/sendMail`, {
+        user: [...user],
+        emailID: email,
+        id
+      })
       return true;
     }
     //email
