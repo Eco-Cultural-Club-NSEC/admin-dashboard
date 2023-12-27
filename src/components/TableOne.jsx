@@ -154,9 +154,10 @@ export function TableOne() {
                           {!e.payment_verified ? (
                             <a className="text-gray-700 cursor-pointer">
                               <Modal
+                                user={e.Name}
                                 payment_id={e.Payment_id}
                                 id={e.id}
-                                email={e.email}
+                                email={e.Email}
                                 paymentUrl={e.paymentUrl}
                                 userData={data}
                                 setUserData={setData}

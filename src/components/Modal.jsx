@@ -9,6 +9,7 @@ export default function Modal({
   userData,
   setUserData,
   reg,
+  user
 }) {
   const [showModal, setShowModal] = useState(false);
   return (
@@ -54,6 +55,7 @@ export default function Modal({
                     userData={userData}
                     setUserData={setUserData}
                     reg={reg}
+                    user={user}
                   />
                 </div>
               </div>

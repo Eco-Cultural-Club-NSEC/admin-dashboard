@@ -8,11 +8,12 @@ export default function Verifymodal({
   userData,
   setUserData,
   reg,
+  user
 }) {
   const [showModal, setShowModal] = useState(false);
 
   const verified = async () => {
-    const status = await updateSingleRegPayment(id, email, reg);
+    const status = await updateSingleRegPayment(id, email, reg, user);
     if (!status) return false;
     setShowModal(false);
     setModal(false);
@@ -23,7 +24,7 @@ export default function Verifymodal({
     };
     updatedInfo.payment_verified = true;
     data[ind] = updatedInfo;
-    data.sort((a,b)=>{
+    data.sort((a, b) => {
       return a.payment_verified - b.payment_verified;
     })
     setUserData(data);
