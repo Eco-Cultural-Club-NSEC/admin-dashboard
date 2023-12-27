@@ -9,13 +9,16 @@ import {
   Wrench,
   Banknote,
   LogOut,
+  AreaChart,
 } from "lucide-react";
 import { TableOne } from "./TableOne";
 import { auth } from "../firebase-config";
 import { signOut } from "firebase/auth";
+import Stats from "./Stats";
 
 export function SidebarOne() {
   const [openPay, setOpenPay] = useState(false);
+  const [openStats, setOpenStats] = useState(false);
 
   const logoutHandler = () => {
     signOut(auth)
@@ -49,18 +52,22 @@ export function SidebarOne() {
               <a
                 className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 cursor-pointer"
                 onClick={() => {
+                  setOpenStats(true);
+                  setOpenPay(false);
+                }}
+              >
+                <AreaChart className="h-5 w-5" aria-hidden="true" />
+                <span className="mx-2 text-sm font-medium">Stats</span>
+              </a>
+              <a
+                className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 cursor-pointer"
+                onClick={() => {
                   setOpenPay(true);
+                  setOpenStats(false);
                 }}
               >
                 <Banknote className="h-5 w-5" aria-hidden="true" />
                 <span className="mx-2 text-sm font-medium">Verify Payment</span>
-              </a>
-              <a
-                className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700"
-                href="#"
-              >
-                <Wallet className="h-5 w-5" aria-hidden="true" />
-                <span className="mx-2 text-sm font-medium">Sales</span>
               </a>
             </div>
             <div className="space-y-3 ">
@@ -100,7 +107,10 @@ export function SidebarOne() {
           </nav>
         </div>
       </aside>
-      <div className="w-[2000px]">{openPay && <TableOne />}</div>
+      <div className={openPay ? "w-[2000px]" : ""}>
+        {openPay && <TableOne />}
+      </div>
+      <div className={openStats ? "w-[1980px]" : ""}>{openStats && <Stats />}</div>
     </div>
   );
 }
