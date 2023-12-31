@@ -29,7 +29,7 @@ const Details = () => {
   }, [])
   return (
     <>
-      {present ? <UserFound /> : <p>Fuck You</p>}
+      {present ? <UserFound /> : <p>User not found</p>}
     </>
   )
 }
