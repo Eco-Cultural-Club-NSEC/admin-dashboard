@@ -74,7 +74,7 @@ export function TableOne() {
           GROUP EVENTS
         </h1>
       )}
-      <section className="mx-auto w-auto max-w-7xl px-4 py-4 ">
+      <section className="mx-auto w-auto max-w-[1500px] px-4 py-4 ">
         <div className="mt-6 flex flex-col h-[680px]">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -94,7 +94,12 @@ export function TableOne() {
                       >
                         Event Name
                       </th>
-
+                      <th
+                        scope="col"
+                        className="px-12 py-3.5 text-left text-sm font-normal text-gray-700"
+                      >
+                        College Name
+                      </th>
                       <th
                         scope="col"
                         className="px-4 py-3.5 text-left text-sm font-normal text-gray-700"
@@ -134,6 +139,11 @@ export function TableOne() {
                         <td className="whitespace-nowrap px-12 py-4">
                           <div className="text-sm text-gray-900 ">
                             {e.Event}
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-12 py-4">
+                          <div className="text-sm text-gray-900 ">
+                            {e.College_Name}
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-4 py-4">
