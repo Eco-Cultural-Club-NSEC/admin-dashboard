@@ -5,7 +5,7 @@ import { db } from "../firebase-config";
 const Stats = () => {
   const [data, setData] = useState([]);
   const [groupData, setGroupData] = useState({});
-  const [verified,setVerified] = useState(0);
+  const [verified, setVerified] = useState(0);
 
   const singleColRef = collection(db, "singleReg");
   const multiColRef = collection(db, "multiReg");
@@ -33,8 +33,8 @@ const Stats = () => {
         return result;
       }, {});
       let temp = 0;
-      info.map((e)=>{
-        e.payment_verified ? temp++ : temp
+      info.map((e) => {
+        e.payment_verified ? temp++ : temp;
       });
       setVerified(temp);
       setData(info);
@@ -50,18 +50,22 @@ const Stats = () => {
 
   return (
     <div className="flex flex-col justify-between items-center m-[40px] h-[400px]">
-      <h1 className="text-3xl text-blue-500">
+      <h1 className="text-3xl text-blue-500 p-4">
         Total Registration: {data.length}
       </h1>
-      <h1 className="text-3xl text-green-500">
-        Payment Verified:  {verified}
+      <h1 className="text-3xl text-green-500 p-4">
+        Payment Verified: {verified}
       </h1>
-      <h1 className="text-3xl text-red-500">
-        Payment Not Verified:  {data.length - verified}
+      <h1 className="text-3xl text-red-500 p-4">
+        Payment Not Verified: {data.length - verified}
       </h1>
-      <div className="flex flex-col justify-evenly items-start w-full">
+      <div className="flex flex-col justify-evenly items-start w-full p-4">
         {Object.entries(groupData).map(([key, value]) => {
-          return(<h1 key={key} className="text-2xl p-2 text-green-600">{key} :  {value.length}</h1>)
+          return (
+            <h1 key={key} className="text-2xl p-2 text-green-600">
+              {key} : {value.length}
+            </h1>
+          );
         })}
       </div>
     </div>
