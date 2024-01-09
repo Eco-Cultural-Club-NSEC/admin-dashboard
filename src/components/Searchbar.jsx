@@ -6,8 +6,8 @@ export default function Searchbar({ data, setSearchData, setIsSearch }) {
   const onSearch = () => {
     const info = data.filter((name) => {
       if (Array.isArray(name.Name))
-        return name.Name[0].toLowerCase().startsWith(searchBoxData.trim().toLowerCase());
-      else return name.Name.toLowerCase().startsWith(searchBoxData.trim().toLowerCase());
+        return name.Event.toLowerCase().startsWith(searchBoxData.trim().toLowerCase());
+      else return name.Event.toLowerCase().startsWith(searchBoxData.trim().toLowerCase());
     });
     setSearchData(info);
     setIsSearch(true);

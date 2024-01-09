@@ -9,7 +9,10 @@ export default function Modal({
   userData,
   setUserData,
   reg,
-  user
+  user,
+  isSearch,
+  setSearchData,
+  allData,
 }) {
   const [showModal, setShowModal] = useState(false);
   return (
@@ -52,10 +55,13 @@ export default function Modal({
                     setModal={setShowModal}
                     id={id}
                     email={email}
+                    allData={allData}
                     userData={userData}
                     setUserData={setUserData}
                     reg={reg}
                     user={user}
+                    isSearch={isSearch}
+                    setSearchData={setSearchData}
                   />
                 </div>
               </div>

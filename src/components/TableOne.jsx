@@ -183,9 +183,12 @@ export function TableOne() {
                                     id={e.id}
                                     email={e.Email}
                                     paymentUrl={e.paymentUrl}
-                                    userData={data}
+                                    allData={data}
+                                    userData={searchData}
                                     setUserData={setData}
                                     reg={reg}
+                                    isSearch={isSearch}
+                                    setSearchData={setSearchData}
                                   />
                                 </a>
                               ) : (
@@ -244,9 +247,12 @@ export function TableOne() {
                                     id={e.id}
                                     email={e.Email}
                                     paymentUrl={e.paymentUrl}
-                                    userData={data}
+                                    allData={data}
+                                    userData={searchData}
                                     setUserData={setData}
                                     reg={reg}
+                                    isSearch={isSearch}
+                                    setSearchData={setSearchData}
                                   />
                                 </a>
                               ) : (
