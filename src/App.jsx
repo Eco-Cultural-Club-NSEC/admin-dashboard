@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { SidebarOne } from './components/SidebarOne'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Login from './views/Login'
@@ -7,6 +7,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase-config'
 import Notadmin from './views/Notadmin'
 import Details from './views/Details'
+import Mainevents from "./views/Mainevents"
 
 function App() {
 
@@ -18,9 +19,9 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
-        if(userAuth.email != 'ecoculturalclubnsec@gmail.com')
+        if (userAuth.email != 'ecoculturalclubnsec@gmail.com')
           navigate("/denied");
-        else if(currentPath.startsWith('/events/'))
+        else if (currentPath.startsWith('/events/'))
           navigate(currentPath);
         else
           navigate('/')
@@ -32,13 +33,14 @@ function App() {
 
   return (
     <>
-    <Routes>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/' element={<SidebarOne/>}/>
-      <Route path='/events/:eventtype/:id' element={<Details/>}/>
-      <Route path='/denied' element={<Notadmin/>}/>
-      <Route path='*' element={<Pagenotfound/>}/>
-    </Routes>
+      <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<SidebarOne />} />
+        <Route path='/events/:eventtype/:id' element={<Details />} />
+        <Route path='/mainevents/:email' element={<Mainevents />} />
+        <Route path='/denied' element={<Notadmin />} />
+        <Route path='*' element={<Pagenotfound />} />
+      </Routes>
     </>
   )
 }
