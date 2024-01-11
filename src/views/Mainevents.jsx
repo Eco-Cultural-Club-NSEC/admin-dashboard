@@ -13,7 +13,7 @@ const Mainevents = () => {
       setStatus("Verified🥳")
     }
     catch (err) {
-      setStatus("User already verified")
+      setStatus("User has already entered the event")
     }
   }
 
