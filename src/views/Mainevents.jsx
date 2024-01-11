@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 
 const Mainevents = () => {
-  const [verified, setVerified] = useState(false)
+  const [status, setStatus] = React.useState("")
   const location = useLocation()
   const email = location.pathname.split("/")[2]
-  useEffect(() => {
 
-    (async function() {
-      const res = await axios.get(`https://sapi.slickapp.co/os-user-master/verify_entry/${email}/asdfghjk`)
-      if (res.ok) {
-        setVerified(true)
-      }
-    })()
-
-  }, [])
+  const verifyUser = async () => {
+    try {
+      await axios.get(`https://sapi.slickapp.co/os-user-master/verify_entry/${email}/asdfghjk`)
+      setStatus("Verified🥳")
+    }
+    catch (err) {
+      setStatus("User already verified")
+    }
+  }
 
   return (
-    <>
-      {!verified ? <p>User already verified!</p> : <p className='text-green-600'>VERIFIED!</p>}
-    </>
+    <div className='w-full h-screen flex flex-col items-center justify-center'>
+      <button className='bg-green-700 text-white rounded-md py-2 px-5 uppercase font-bold' onClick={() => verifyUser()}>
+        Verify User
+      </button>
+      {status}
+    </div>
   )
 }
 

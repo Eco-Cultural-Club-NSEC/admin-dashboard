@@ -23,6 +23,8 @@ function App() {
           navigate("/denied");
         else if (currentPath.startsWith('/events/'))
           navigate(currentPath);
+        else if (currentPath.startsWith('/mainevents/'))
+          navigate(currentPath);
         else
           navigate('/')
       } else {
